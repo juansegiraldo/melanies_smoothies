@@ -6,22 +6,17 @@ import requests
 # Write directly to the app
 st.title(":cup_with_straw: Create your own Smoothie :cup_with_straw:")
 st.header("Choose the fruits you want")
-st.write(
-    """Replace this example with your own code!
-    **And if you're new to Streamlit,** check
-    out our easy-to-follow guides at
-    [docs.streamlit.io](https://docs.streamlit.io).
-    """
-)
 
 name_on_order = st.text_input ('Name on Smoothie:')
 st.write ('The name on your Smoothie will be:', name_on_order)
 
-cnx = st.connection("snowflake")
-session = cnx.session()
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
 st.dataframe(data=my_dataframe, use_container_width=True)
 st.stop()
+cnx = st.connection("snowflake")
+session = cnx.session()
+
 
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'
